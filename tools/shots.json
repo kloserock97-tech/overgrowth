@@ -1,0 +1,53 @@
+[
+ {
+  "eval": "document.querySelectorAll(\".hud,.credit,.stats\").forEach(e=>e.style.display=\"none\"); overgrowth.gui.hide();"
+ },
+ {
+  "wait": 400
+ },
+ {
+  "eval": "overgrowth.load({...overgrowth.DEFAULTS,...overgrowth.PRESETS[\"thaw\"],...{\"play\":false,\"growth\":0.3},float:false})"
+ },
+ {
+  "wait": 2000
+ },
+ {
+  "shot": "preset-thaw"
+ },
+ {
+  "eval": "overgrowth.load({...overgrowth.DEFAULTS,...overgrowth.PRESETS[\"spring\"],...{},float:false})"
+ },
+ {
+  "wait": 2000
+ },
+ {
+  "shot": "preset-spring"
+ },
+ {
+  "eval": "overgrowth.load({...overgrowth.DEFAULTS,...overgrowth.PRESETS[\"overgrown\"],...{},float:false})"
+ },
+ {
+  "wait": 2000
+ },
+ {
+  "shot": "preset-overgrown"
+ },
+ {
+  "eval": "overgrowth.load({...overgrowth.DEFAULTS,...overgrowth.PRESETS[\"frost\"],...{},float:false})"
+ },
+ {
+  "wait": 2000
+ },
+ {
+  "shot": "preset-frost"
+ },
+ {
+  "eval": "overgrowth.load({...overgrowth.DEFAULTS,...overgrowth.PRESETS[\"dusk\"],...{},float:false})"
+ },
+ {
+  "wait": 2000
+ },
+ {
+  "shot": "preset-dusk"
+ }
+]

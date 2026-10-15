@@ -1,0 +1,27 @@
+{
+  "name": "overgrowth",
+  "version": "1.0.0",
+  "description": "A slab of frosted glass that thaws and grows over with moss: shell-textured pile, melting ice, flowers, and every value on a live panel.",
+  "type": "module",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Nikita Gorbachev",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "notices": "node tools/notices.mjs"
+  },
+  "dependencies": {
+    "lil-gui": "^0.21.0",
+    "three": "^0.186.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.186.0",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
