@@ -77,6 +77,10 @@ behind it is plain CSS gradients, and the floor is only a shadow catcher.
 `H` hides the panel, `Space` freezes time, `R` grows the slab again from zero. Move the pointer and the slab leans
 towards it.
 
+The settings sit in a sheet at the bottom of the page, one tab per group. Drag anywhere on a row to change a value,
+double-click it to type one, or use the arrow keys. The buttons in the top right switch between a light and a dark
+panel, fold the sheet and reset everything.
+
 Five presets are included (thaw, spring, overgrown, frost, dusk). **New seeds** plants another garden: other
 cushions, flowers and drops on the same slab. **Copy link to this look** puts the whole setup in the address bar.
 
@@ -132,7 +136,7 @@ screenshots above.
 Shell texturing (drawing a surface many times along its normal and masking each layer) is a long-known technique
 for fur, grass and moss in real-time graphics; this is my own take on it, and all of the code here is my own. Hashes
 come from my own Hash Kit. Built with [three.js](https://threejs.org) (including its RoomEnvironment, PMREM and
-RoundedBoxGeometry) and [lil-gui](https://lil-gui.georgealways.com).
+RoundedBoxGeometry). The settings panel (`src/panel/`) is my own too.
 
 ## Licence
 

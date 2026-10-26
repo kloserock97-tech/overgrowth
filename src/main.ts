@@ -1,4 +1,4 @@
-import GUI from "lil-gui";
+import GUI, { stageSize } from "./panel/panel.js";
 import { Overgrowth, TIERS } from "./Overgrowth";
 import { DEFAULTS, PRESETS, readUrl, writeUrl, type Settings } from "./settings";
 import "./style.css";
@@ -24,9 +24,9 @@ try {
   throw error;
 }
 
-function resize() { view.resize(innerWidth, innerHeight); }
+function resize() { const { width, height } = stageSize(); view.resize(width, height); }
 addEventListener("resize", resize);
-addEventListener("pointermove", (event) => view.setPointer(event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1));
+addEventListener("pointermove", (event) => view.setPointer(event.clientX / innerWidth * 2 - 1, event.clientY / stageSize().height * 2 - 1));
 document.documentElement.addEventListener("pointerleave", () => view.setPointer(0, 0));
 
 /* ── the run ──────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -62,7 +62,7 @@ function replay() {
    In the order you would reach for it: where the run is, what is on the slab, what the moss looks like, the glass,
    the light, the camera and the quality. */
 
-const gui = new GUI({ title: "Overgrowth", width: 300 });
+const gui = new GUI({ title: "Overgrowth", repo: "https://github.com/kloserock97-tech/overgrowth", onReset: () => load(DEFAULTS) });
 const apply = () => { view.apply(settings); syncPage(); writeUrl(settings); };
 const holdStill = () => { settings.play = false; gui.controllersRecursive().forEach((controller) => controller.updateDisplay()); };
 
@@ -92,7 +92,6 @@ moss.addColor(settings, "rootColor").name("root").onChange(apply);
 moss.addColor(settings, "tipColor").name("tip").onChange(apply);
 moss.addColor(settings, "tipColor2").name("tip, bright").onChange(apply);
 moss.addColor(settings, "dryColor").name("dry strands").onChange(apply);
-moss.close();
 
 const glass = gui.addFolder("Glass");
 glass.addColor(settings, "glassColor").name("tint").onChange(apply);
@@ -100,7 +99,6 @@ glass.add(settings, "roughness", 0.05, 0.9, 0.01).name("matting").onChange(apply
 glass.add(settings, "frost", 0, 2, 0.01).name("frost").onChange(apply);
 glass.add(settings, "leaves", 0, 2, 0.01).name("leaf shadows").onChange(apply);
 glass.add(settings, "shadow", 0, 0.8, 0.01).name("floor shadow").onChange(apply);
-glass.close();
 
 const light = gui.addFolder("Light");
 light.add(settings, "sunElevation", 5, 89, 0.5).name("sun height, °").onChange(apply);
@@ -115,7 +113,6 @@ light.add(settings, "exposure", 0.4, 2.2, 0.01).name("exposure").onChange(apply)
 light.add(settings, "halation", 0, 4, 0.01).name("halation").onChange(apply);
 light.add(settings, "vignette", 0, 4, 0.01).name("vignette").onChange(apply);
 light.addColor(settings, "backdrop").name("studio").onChange(apply);
-light.close();
 
 const camera = gui.addFolder("View");
 camera.add(settings, "tilt").name("lean to the pointer").onChange(apply);
@@ -126,7 +123,6 @@ camera.add(settings, "zoom", 0.6, 1.8, 0.01).name("zoom").onChange(apply);
 const steps: Record<string, number> = { auto: -1 };
 TIERS.forEach((step, i) => { steps[`${i} · DPR ${step.dpr}, ${step.shells} layers`] = i; });
 camera.add(settings, "quality", steps).name("quality").onChange(() => { view.setQuality(settings.quality); writeUrl(settings); });
-camera.close();
 
 const actions = {
   preset: "thaw",
@@ -141,7 +137,6 @@ const actions = {
     try { await navigator.clipboard.writeText(JSON.stringify(settings, null, 2)); toast("Settings copied"); }
     catch { toast("Copy failed"); }
   },
-  reset: () => load(DEFAULTS),
 };
 
 gui.add(actions, "preset", Object.keys(PRESETS)).name("preset").onChange((key: string) => load({ ...DEFAULTS, ...PRESETS[key] }));
@@ -149,9 +144,6 @@ gui.add(actions, "replay").name("grow again from zero");
 gui.add(actions, "reseed").name("new seeds");
 gui.add(actions, "copyLink").name("copy link to this look");
 gui.add(actions, "copySettings").name("copy settings as JSON");
-gui.add(actions, "reset").name("reset");
-/* on a phone the panel would cover the slab: it starts folded */
-if (matchMedia("(max-width: 720px)").matches) gui.close();
 
 function load(next: Settings) {
   const seedChanged = next.seed !== settings.seed;

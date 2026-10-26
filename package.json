@@ -13,7 +13,6 @@
     "notices": "node tools/notices.mjs"
   },
   "dependencies": {
-    "lil-gui": "^0.21.0",
     "three": "^0.186.0"
   },
   "devDependencies": {
